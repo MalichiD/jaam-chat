@@ -44,7 +44,7 @@
     "uploadthing": "^5.7.1",
     "uuid": "^9.0.1",
     "zod": "^3.22.2",
-    "zustand": "^4.4.3"
+    "zustand": "^4.4.4"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.5",
