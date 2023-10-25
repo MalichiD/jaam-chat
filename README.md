@@ -1,1 +1,1 @@
-JAAM Chat is a real time chat application built using Next.JS
+JAAM Chat is a real-time chat web application built using Next.JS
