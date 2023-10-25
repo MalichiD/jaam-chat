@@ -63,7 +63,7 @@ export const InitialModal = () => {
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
-            await axios.post("/api/server", data);
+            await axios.post("/api/servers", data);
             
             form.reset();
             router.refresh();
@@ -82,7 +82,7 @@ export const InitialModal = () => {
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Customize your server
+                        Create your server
                     </DialogTitle>
                     <DialogDescription text-center text-zinc-500>
                         Personalize your server with a name and an image. You can always change it later.
