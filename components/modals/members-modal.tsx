@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { MemberRole } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { on } from "events";
 
 const roleIconMap = {
     "GUEST": null,
@@ -58,11 +59,10 @@ export const MembersModal = () => {
                     url: `/api/members/${memberId}`,
                     query: {
                         serverId: server?.id,
-                        ban: false,
                     },
                 });
 
-            const response = await axios.delete(url, {data: {ban: false}});
+            const response = await axios.delete(url);
 
             router.refresh();
 
@@ -79,18 +79,15 @@ export const MembersModal = () => {
         try {
             setLoadingId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/members/${memberId}`,
+                url: `/api/bannedUsers/${memberId}`,
                 query: {
                     serverId: server?.id,
-                    ban: true,
                 },
             });
 
-        const response = await axios.delete(url);
-
-        router.refresh();
-
-        onOpen("members", {server: response.data});
+        axios.post(url);
+        
+        onKick(memberId);
     } catch (error){
         console.log(error);
     } finally {

@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
     req: Request,
-    {params} : {params: {memberId: string}}
+    {params} : {params: {bannedUserId: string}}
 ) {
     try {
         
@@ -25,10 +25,19 @@ export async function DELETE(
             return new NextResponse("Server ID not found", {status: 400});
         }
 
-        if(!params.memberId) {
-            return new NextResponse("Member ID not found", {status: 400});
+        if(!params.bannedUserId) {
+            return new NextResponse("Banned User ID not found", {status: 400});
         }
 
+        const bannedUser = await db.bannedUser.findUnique({
+            where: {
+              id: params.bannedUserId,
+            },
+          });
+      
+        if (!bannedUser) {
+            return new NextResponse("Banned User Not Found", { status: 404 });
+        }
 
         
         const server = await db.server.update({
@@ -37,57 +46,70 @@ export async function DELETE(
                 ownerId: profile.id,
             },
             data: {
-                members: {
+                bannedUsers: {
                     deleteMany: {
-                        id: params.memberId,
-                        profileId: {
-                            not: profile.id,
-                        }
+                        id: params.bannedUserId,
                     }
                 },
             },
             include: {
-                members: {
+                bannedUsers : {
                     include: {
                         profile: true,
                     },
                     orderBy: {
-                        role: "asc"
+                        createdAt: "asc"
                     }
-                },
+                }
             }
         });
         
         return NextResponse.json(server);
             
     } catch (error){
-        console.log("[MEMBER_ID_DELETE]", error);
+        console.log("[BANNEDUSER_ID_DELETE]", error);
         return new NextResponse("Internal Server Error", {status: 500});
     }
 }
 
-export async function PATCH(
+export async function POST(
     req: Request,
-    {params} : {params: {memberId: string}}
+    {params} : {params: {bannedUserId: string}}
 ) {
     try {
+        
         const profile = await currentProfile();
         const {searchParams} = new URL(req.url);
-        const {role} = await req.json();
-
+        
         const serverId = searchParams.get("serverId");
 
+        
         if (!profile) {
             return new NextResponse("Unauthorized", {status: 401});
         }
 
-        if (!serverId) {
+        if(!serverId) {
             return new NextResponse("Server ID not found", {status: 400});
         }
 
-        if (!params.memberId){
+        if(!params.bannedUserId) {
             return new NextResponse("Member ID not found", {status: 400});
         }
+
+        const member = await db.member.findUnique({
+            where: {
+              id: params.bannedUserId,
+            },
+          });
+      
+        if (!member) {
+            return new NextResponse("Member Not Found", { status: 404 });
+        }
+
+        if (member.role === "ADMIN"){
+            return new NextResponse("Cannot ban server owner", {status: 400});
+        }
+
         
         const server = await db.server.update({
             where: {
@@ -95,37 +117,28 @@ export async function PATCH(
                 ownerId: profile.id,
             },
             data: {
-                members: {
-                    update: {
-                        where: {
-                            id: params.memberId,
-                            profileId: {
-                                not: profile.id,
-                            }
-                        },
-                        data: {
-                            role,
-                        }
-                    },
-                    
-                }
+                bannedUsers: {
+                    create: [{
+                        profileId: member.profileId,
+                    }]
+                },
             },
             include: {
-                members: {
+                bannedUsers : {
                     include: {
                         profile: true,
                     },
                     orderBy: {
-                        role: "asc"
+                        createdAt: "asc"
                     }
                 }
-            }    
+            }
         });
-
+        
         return NextResponse.json(server);
-
+            
     } catch (error){
-        console.log("[MEMBERS_ID_PATCH]", error)
+        console.log("[BANNEDUSER_ID_POST]", error);
         return new NextResponse("Internal Server Error", {status: 500});
     }
 }
