@@ -3,6 +3,9 @@
 import {CreateServerModal} from "@/components/modals/create-server-modal";
 import { useEffect, useState } from "react";
 import { InviteModal } from "@/components/modals/invite-modal";
+import { EditServerModal } from "@/components/modals/edit-server-modal";
+import { MembersModal } from "@/components/modals/members-modal";
+import { CreateChannelModal } from "@/components/modals/create-channel-modal";
 
 //Modal Provider to avoid hydration issues
 export const ModalProvider = () => {
@@ -19,6 +22,9 @@ export const ModalProvider = () => {
         <>
             <CreateServerModal />
             <InviteModal />
+            <EditServerModal/>
+            <MembersModal/>
+            <CreateChannelModal/>
         </>
     )
 }

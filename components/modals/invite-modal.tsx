@@ -58,7 +58,7 @@ export const InviteModal = () => {
                     <DialogTitle className="text-2xl text-center font-bold">
                         Invite Friends
                     </DialogTitle>
-                    <DialogDescription text-center text-zinc-500>
+                    <DialogDescription className="text-center text-zinc-500">
                         Invite your friends to join your server!
                     </DialogDescription>
                 </DialogHeader>
@@ -69,6 +69,7 @@ export const InviteModal = () => {
                     </Label>
                     <div className="flex items-center mt-2 gap-x-2">
                         <Input
+                        readOnly
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0
                         focus-visible:ring-0 text-black

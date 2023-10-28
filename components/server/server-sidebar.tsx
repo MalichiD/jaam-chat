@@ -36,6 +36,11 @@ export const ServerSidebar = async ({
                     role: 'asc',
                 }
             },
+            bannedUsers: {
+                include: {
+                    profile: true,
+                },
+            },
         }
     });
 
