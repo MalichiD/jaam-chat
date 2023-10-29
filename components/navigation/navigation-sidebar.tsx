@@ -7,12 +7,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "./navigation-item";
 import { ModeToggle } from "@/components/mode-toggle";
 import { UserButton } from "@clerk/nextjs";
+import { updateProfile } from "@/lib/update-profile";
 
 export const NavigationSidebar = async () => {
     const profile = await currentProfile();
     if (!profile) {
         return redirect('/');
     }
+
+    updateProfile();
 
     const servers = await db.server.findMany({
         where: {
