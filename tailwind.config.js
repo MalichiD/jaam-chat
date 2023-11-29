@@ -22,6 +22,9 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        backgroundImage:{
+            'login-bg': "url('https://utfs.io/f/f8ce9047-329f-444d-957f-c910d97f2a05-3jbt6.gif')"
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
