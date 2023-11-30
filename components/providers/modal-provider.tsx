@@ -13,6 +13,7 @@ import { DeleteChannelModal } from "@/components/modals/delete-channel-modal";
 import { EditChannelModal } from "@/components/modals/edit-channel-modal";
 import { MessageFileModal } from "@/components/modals/message-file-modal";
 import { DeleteMessageModal } from "../modals/delete-message-modal";
+import { BannedUsersModal } from "../modals/banned-users-modal";
 
 //Modal Provider to avoid hydration issues
 export const ModalProvider = () => {
@@ -38,6 +39,7 @@ export const ModalProvider = () => {
             <EditChannelModal/>
             <MessageFileModal/>
             <DeleteMessageModal/>
+            <BannedUsersModal/>
         </>
     )
 }
