@@ -19,13 +19,15 @@ export const updateProfile = async () => {
         name: `${user.firstName} ${user.lastName}`,
         imageUrl: user.imageUrl,
         email: user.emailAddresses[0].emailAddress,
+        username: user.username? user.username : user.emailAddresses[0].emailAddress,
     };
 
     if (
         profile &&
         profile.name === currentUserData.name &&
         profile.imageUrl === currentUserData.imageUrl &&
-        profile.email === currentUserData.email
+        profile.email === currentUserData.email &&
+        profile.username === currentUserData.username
     ) {
         return;
     }

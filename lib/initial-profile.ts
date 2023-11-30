@@ -23,6 +23,7 @@ export const initialProfile = async () => {
         data: {
             userId: user.id,
             name: `${user.firstName} ${user.lastName}`,
+            username: user.username? user.username : user.emailAddresses[0].emailAddress,
             imageUrl: user.imageUrl,
             email: user.emailAddresses[0].emailAddress
         }

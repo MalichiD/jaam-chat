@@ -96,7 +96,7 @@ export const BannedUsersModal = () => {
                                     {bannedUser.profile.name}
                                 </div>
                                 <p className="text-xs text-zinc-500">
-                                    {bannedUser.profile.email}
+                                    {bannedUser.profile.username}
                                 </p>
                             </div>
                             {server.ownerId !== bannedUser.profileId && loadingId !== bannedUser.id && (
