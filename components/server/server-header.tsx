@@ -2,7 +2,7 @@
 import { ServerWithMembersWithProfiles } from "@/types";
 import { MemberRole } from "@prisma/client";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ChevronDown, LogOut, PlusCircle, Settings, Trash, UserPlus, Users } from "lucide-react";
+import { ChevronDown, LogOut, PlusCircle, Settings, Trash, UserPlus, Users, UserX } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
 import { Dialog } from "../ui/dialog";
 
@@ -66,7 +66,7 @@ export const ServerHeader = ({
                         onClick={() => onOpen('bannedUsers', {server})}
                         className="px-3 py-2 text-sm cursor-pointer">
                             Manage Banned Users
-                            <Users className="h-4 w-4 ml-auto"/>
+                            <UserX className="h-4 w-4 ml-auto"/>
                         </DropdownMenuItem>
                     )}
                     {isModerator && (
